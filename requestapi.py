@@ -2,6 +2,11 @@ import grequests
 import time
 import pandas as pd
 import csv
+import sys
+
+server = int(sys.argv[1])
+range_start = int(sys.argv[2])
+range_end = int(sys.argv[3])
 
 
 def store_data(part):
@@ -16,7 +21,7 @@ def store_data(part):
     
     #urls = [f"http://0.0.0.0:5400/extract?{c}" for c in channel_list]#200
     #server path -1 to -9
-    urls = [f"https://flask-single-chan.onrender.com/extract?{c}" for c in channel_list]#200
+    urls = [f"https://flask-single-chan-{server}.onrender.com/extract?{c}" for c in channel_list]#200
     print("got here 1")
     time_i = time.time()
     rs = (grequests.get(u) for u in urls)
@@ -57,7 +62,7 @@ def store_data(part):
     #print(len(grequests.map(responses)))
     print(f'Time for part_{part} is {time.time()-time_init}')
 
-for part in range(591, 1000):
+for part in range(range_start, range_end):
     store_data(part)
 
 #python r and hit tab
